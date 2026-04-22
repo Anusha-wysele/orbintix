@@ -1,0 +1,102 @@
+[
+    {
+        "id": 1,
+        "title": "Senior SAP Consultant",
+        "location": "New York, USA",
+        "type": "Full-time",
+        "level": "Senior",
+        "category": "Consulting",
+        "description": "We are seeking an experienced SAP Consultant to lead enterprise-level digital transformation projects.",
+        "postedDate": "2026-04-15"
+    },
+    {
+        "id": 2,
+        "title": "Frontend Developer (React)",
+        "location": "Remote",
+        "type": "Full-time",
+        "level": "Mid-level",
+        "category": "Engineering",
+        "description": "Join our product team to build stunning, high-performance web applications using React and Tailwind CSS.",
+        "postedDate": "2026-04-18"
+    },
+    {
+        "id": 3,
+        "title": "Backend Engineer (Node.js)",
+        "location": "London, UK",
+        "type": "Full-time",
+        "level": "Senior",
+        "category": "Engineering",
+        "description": "Design and implement scalable microservices architecture for our global data platforms.",
+        "postedDate": "2026-04-10"
+    },
+    {
+        "id": 4,
+        "title": "UI/UX Designer",
+        "location": "Berlin, Germany",
+        "type": "Part-time",
+        "level": "Mid-level",
+        "category": "Design",
+        "description": "Create intuitive and beautiful user experiences for our enterprise-grade technology solutions.",
+        "postedDate": "2026-04-12"
+    },
+    {
+        "id": 5,
+        "title": "Cybersecurity Analyst",
+        "location": "Singapore",
+        "type": "Full-time",
+        "level": "Senior",
+        "category": "Security",
+        "description": "Monitor and secure our clients' infrastructure against modern cyber threats and vulnerabilities.",
+        "postedDate": "2026-04-19"
+    },
+    {
+        "id": 6,
+        "title": "AI/ML Researcher",
+        "location": "Remote",
+        "type": "Contract",
+        "level": "Lead",
+        "category": "AI",
+        "description": "Drive innovation in Generative AI and custom LLM integrations for large-scale enterprise workflows.",
+        "postedDate": "2026-04-17"
+    },
+    {
+        "id": 7,
+        "title": "Cloud Architect (AWS)",
+        "location": "Dubai, UAE",
+        "type": "Full-time",
+        "level": "Senior",
+        "category": "Infrastructure",
+        "description": "Design secure and scalable cloud infrastructure for our multinational retail and finance clients.",
+        "postedDate": "2026-04-14"
+    },
+    {
+        "id": 8,
+        "title": "DevOps Engineer",
+        "location": "Austin, USA",
+        "type": "Full-time",
+        "level": "Mid-level",
+        "category": "Infrastructure",
+        "description": "Automate deployment pipelines and manage cloud infrastructure using modern CI/CD tools.",
+        "postedDate": "2026-04-16"
+    },
+    {
+        "id": 9,
+        "title": "Salesforce Developer",
+        "location": "Remote",
+        "type": "Full-time",
+        "level": "Mid-level",
+        "category": "Consulting",
+        "description": "Develop and customize Salesforce solutions to improve customer engagement and operational efficiency.",
+        "postedDate": "2026-04-11"
+    },
+    {
+        "id": 10,
+        "title": "Digital Marketing Specialist",
+        "location": "New York, USA",
+        "type": "Full-time",
+        "level": "Junior",
+        "category": "Marketing",
+        "description": "Grow our brand presence and lead generation through data-driven digital marketing campaigns.",
+        "postedDate": "2026-04-13"
+    }
+]

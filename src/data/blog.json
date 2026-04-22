@@ -1,0 +1,76 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "How IT Consulting Drives Digital Transformation",
+      "slug": "it-consulting-digital-transformation",
+      "author": "Admin",
+      "date": "2026-04-10",
+      "comments": 3,
+      "category": "Consulting",
+      "tags": ["Digital Transformation", "IT Strategy", "Enterprise"],
+      "image": "https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg",
+      "excerpt": "Discover how IT consulting helps businesses modernize operations, adopt new technologies, and stay competitive in a fast-changing market."
+    },
+    {
+      "id": 2,
+      "title": "Top 5 Cloud Strategies for Scalable Business Growth",
+      "slug": "cloud-strategies-scalable-growth",
+      "author": "Admin",
+      "date": "2026-04-08",
+      "comments": 5,
+      "category": "Cloud",
+      "tags": ["Cloud", "AWS", "Scalability"],
+      "image": "https://images.pexels.com/photos/1181354/pexels-photo-1181354.jpeg",
+      "excerpt": "Learn the most effective cloud strategies that enable businesses to scale efficiently while optimizing cost and performance."
+    },
+    {
+      "id": 3,
+      "title": "Why IT Staffing is Critical for US Recruitment Success",
+      "slug": "it-staffing-us-recruitment",
+      "author": "Admin",
+      "date": "2026-04-06",
+      "comments": 2,
+      "category": "Hiring",
+      "tags": ["IT Staffing", "Recruitment", "USA"],
+      "image": "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg",
+      "excerpt": "Explore how strategic IT staffing helps companies in the US hire top tech talent quickly and efficiently."
+    },
+    {
+      "id": 4,
+      "title": "Modern Web Development Trends You Should Know",
+      "slug": "modern-web-development-trends",
+      "author": "Admin",
+      "date": "2026-04-04",
+      "comments": 4,
+      "category": "Development",
+      "tags": ["Web Development", "Frontend", "Trends"],
+      "image": "https://images.pexels.com/photos/270348/pexels-photo-270348.jpeg",
+      "excerpt": "Stay updated with the latest web development trends, tools, and frameworks shaping the future of digital experiences."
+    },
+    {
+      "id": 5,
+      "title": "Salesforce Solutions for Business Automation",
+      "slug": "salesforce-business-automation",
+      "author": "Admin",
+      "date": "2026-04-02",
+      "comments": 1,
+      "category": "Salesforce",
+      "tags": ["Salesforce", "CRM", "Automation"],
+      "image": "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg",
+      "excerpt": "Understand how Salesforce solutions streamline business processes and improve customer relationship management."
+    },
+    {
+      "id": 6,
+      "title": "AI in IT Consulting: Opportunities and Challenges",
+      "slug": "ai-it-consulting-opportunities",
+      "author": "Admin",
+      "date": "2026-03-30",
+      "comments": 6,
+      "category": "AI",
+      "tags": ["AI", "Machine Learning", "Innovation"],
+      "image": "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg",
+      "excerpt": "Artificial intelligence is transforming IT consulting. Learn about its opportunities, risks, and real-world applications."
+    }
+  ]
+}

@@ -8,89 +8,146 @@ const hiringImg = "https://images.unsplash.com/photo-1522071820081-009f0129c71c?
 
 const HiringSection = () => {
     const bulletPoints = [
-        "Pre-vetted candidates",
-        "Fast onboarding",
-        "Flexible hiring models"
+        "Pre-vetted Senior Developers",
+        "Rapid Onboarding (48 hours)",
+        "Scalable On-Demand Talent",
+        "Expert Technology Matching"
     ];
 
     return (
-        <section className="bg-primary py-[80px] overflow-hidden font-outfit relative">
-            {/* Subtle background texture for light mode */}
-            <div className="absolute inset-0 dot-grid opacity-[0.02] pointer-events-none" />
+        <section className="relative w-full bg-white overflow-hidden border-t border-slate-100 flex flex-col lg:flex-row">
+            
+            {/* Left Column: Fixed Editorial Visual (Split Layout) */}
+            <div className="w-full lg:w-1/2 bg-slate-50 relative min-h-[500px] lg:min-h-screen flex items-center justify-center p-10 lg:p-24 overflow-hidden">
+                
+                {/* 1. Background Decorative Pattern (SVG) */}
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
+                    <svg width="100%" height="100%" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" className="scale-150 rotate-90">
+                        <circle cx="200" cy="200" r="150" stroke="#FFC107" strokeWidth="0.5" strokeDasharray="6 6" />
+                        <circle cx="200" cy="200" r="120" stroke="#FFC107" strokeWidth="0.5" strokeDasharray="3 3" />
+                        <path d="M350 200C350 282.843 282.843 350 200 350" stroke="#FFC107" strokeWidth="0.5" strokeDasharray="4 4" />
+                    </svg>
+                </div>
 
-            <div className="max-w-[1200px] mx-auto px-6 relative z-10">
-                <div className="flex flex-col lg:flex-row items-center gap-[60px]">
+                <div className="relative w-full max-w-[520px] lg:sticky lg:top-24 z-10">
                     
-                    {/* Left Side: Image/Illustration */}
-                    <motion.div 
-                        initial={{ opacity: 0, x: -40 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                    {/* 2. Offset Yellow Frame */}
+                    <div className="absolute -right-8 -top-8 w-full h-full border-4 border-[#FFC107] rounded-none z-0">
+                        {/* Top-Right Dot Accent */}
+                        <div className="absolute -right-2 -top-2 w-4 h-4 bg-white border-4 border-[#FFC107] rounded-full shadow-lg" />
+                    </div>
+
+                    {/* 3. Main Talent Image */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
-                        className="w-full lg:w-1/2 relative order-2 lg:order-1"
+                        transition={{ duration: 1.2 }}
+                        className="relative w-full h-full shadow-[0_50px_100px_-20px_rgba(0,0,0,0.25)] rounded-3xl overflow-hidden z-10 border-[16px] border-white"
                     >
-                        <div className="relative rounded-3xl overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.5)] border border-white/5">
-                            <img 
-                                src={hiringImg} 
-                                alt="Hiring Top IT Talent" 
-                                className="w-full h-full object-cover transform hover:scale-105 transition-all duration-[2s] opacity-80"
-                            />
-                        </div>
-                        
-                        {/* Decorative background element */}
-                        <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-accent/5 blur-[100px] rounded-full pointer-events-none" />
+                        <img 
+                            src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg" 
+                            alt="IT Talent Collaboration" 
+                            className="w-full h-full object-cover aspect-[4/5] lg:aspect-auto"
+                        />
+                        <div className="absolute inset-0 bg-primary/5 mix-blend-multiply" />
                     </motion.div>
 
-                    {/* Right Side: Content */}
-                    <motion.div 
-                        initial={{ opacity: 0, x: 40 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                    {/* 4. Circular Overlaid Developer Shot */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 60, rotate: 15 }}
+                        whileInView={{ opacity: 1, x: 0, rotate: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
-                        className="w-full lg:w-1/2 space-y-6 text-center lg:text-left order-1 lg:order-2"
+                        transition={{ delay: 0.4, duration: 1 }}
+                        className="absolute -right-12 lg:-right-24 bottom-1/4 w-32 h-32 lg:w-48 lg:h-48 rounded-full border-[10px] lg:border-[16px] border-white shadow-[0_30px_60px_-12px_rgba(0,0,0,0.4)] z-20 overflow-hidden"
                     >
-                        {/* Status Badge */}
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-accent/5 border border-accent/10 rounded-full">
-                            <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                            <span className="text-accent text-[10px] font-black uppercase tracking-[0.2em]">
-                                Available within 48 hours
+                        <img 
+                            src="https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg" 
+                            alt="Expert Developer" 
+                            className="w-full h-full object-cover px-2"
+                        />
+                    </motion.div>
+
+                    {/* 5. Decorative Yellow Badge */}
+                    <div className="absolute -top-10 -left-10 w-40 h-40 bg-[#FFC107] rounded-full mix-blend-multiply opacity-15 blur-3xl z-0" />
+                </div>
+            </div>
+
+            {/* Right Column: Content Area (Full Split) */}
+            <div className="w-full lg:w-1/2 bg-white px-8 md:px-16 lg:px-24 py-16 lg:py-40 flex flex-col items-start justify-center relative">
+                
+                <div className="w-full max-w-xl mx-auto lg:mx-0 space-y-12">
+                    {/* Header Part */}
+                    <div className="space-y-6">
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="flex items-center gap-4"
+                        >
+                            <div className="h-[2px] w-12 bg-[#FFC107]" />
+                            <span className="text-primary/50 font-black text-[0.6rem] uppercase tracking-[0.4em]">
+                                Recruitment & Staffing
+                            </span>
+                        </motion.div>
+
+                        <motion.h2
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="text-4xl lg:text-4xl xl:text-5xl text-primary tracking-tighter uppercase leading-[1.1]"
+                            style={{ fontWeight: 100, fontFamily: 'Outfit, sans-serif' }}
+                        >
+                            Hire High-Impact <br />
+                            <span className="text-[#FFC107] font-normal italic">Talent</span> Instantly
+                        </motion.h2>
+
+                        <p className="text-slate-500 text-sm md:text-base leading-relaxed font-light text-left">
+                            We bridge the gap between engineering needs and top-tier expertise. Our curated pool 
+                            of senior IT professionals is ready to integrate seamlessly into your project workflow 
+                            within 48 hours.
+                        </p>
+                    </div>
+
+                    {/* Bullet Points */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-8 pt-4">
+                        {bulletPoints.map((point, index) => (
+                            <motion.div 
+                                key={index}
+                                initial={{ opacity: 0, y: 10 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ delay: index * 0.1 }}
+                                viewport={{ once: true }}
+                                className="flex items-center gap-4 group"
+                            >
+                                <div className="w-8 h-8 rounded-full bg-[#FFC107]/10 flex items-center justify-center text-[#FFC107] group-hover:bg-[#FFC107] group-hover:text-primary transition-all duration-300">
+                                    <Check size={16} strokeWidth={3} />
+                                </div>
+                                <span className="text-primary font-bold text-xs uppercase tracking-wider">
+                                    {point}
+                                </span>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    {/* Action Area */}
+                    <div className="pt-10 flex flex-col sm:flex-row items-center gap-8 lg:gap-12">
+                        <Link 
+                            to="/contact?service=hiring"
+                            className="w-full sm:w-auto bg-primary text-white px-12 py-5 font-bold text-xs tracking-[0.3em] uppercase transition-all hover:bg-[#FFC107] hover:text-primary shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] hover:-translate-y-1 text-center"
+                        >
+                            Scale Your Team
+                        </Link>
+                        
+                        <div className="flex flex-col border-l border-slate-200 pl-8">
+                            <span className="text-slate-400 text-[9px] font-bold uppercase tracking-[0.4em] mb-1">
+                                Available Now
+                            </span>
+                            <span className="text-primary font-black text-xs uppercase tracking-tighter">
+                                Start Within 48 Hours
                             </span>
                         </div>
-
-                        <h2 className="text-4xl font-black text-white leading-tight tracking-tighter uppercase">
-                            Hire Top IT <span className="text-accent">Talent</span> Quickly
-                        </h2>
-
-                        <p className="text-text-secondary text-lg leading-relaxed max-w-lg mx-auto lg:mx-0 font-dm-sans">
-                            Build your team with skilled, pre-vetted professionals ready to deliver from day one.
-                        </p>
-
-                        {/* Bullet Points */}
-                        <div className="space-y-4 pt-2">
-                            {bulletPoints.map((point, index) => (
-                                <div key={index} className="flex items-center gap-4 justify-center lg:justify-start group">
-                                    <div className="flex-shrink-0 w-6 h-6 rounded-lg bg-accent/10 flex items-center justify-center border border-accent/20 transition-all group-hover:bg-accent ring-2 ring-accent/0 group-hover:ring-accent/20">
-                                        <Check size={14} className="text-accent group-hover:text-primary transition-colors" />
-                                    </div>
-                                    <span className="text-white font-bold tracking-tight group-hover:text-accent transition-colors">
-                                        {point}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* CTA Button */}
-                        <div className="pt-6">
-                            <Link 
-                                to="/contact?service=hiring"
-                                className="inline-flex items-center gap-3 bg-accent text-primary px-10 py-[16px] rounded-lg font-black text-xs uppercase tracking-widest transition-all duration-300 hover:bg-white hover:shadow-2xl hover:shadow-accent/40 group"
-                            >
-                                Hire Developers Now
-                                <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
-                            </Link>
-                        </div>
-                    </motion.div>
-
+                    </div>
                 </div>
             </div>
         </section>

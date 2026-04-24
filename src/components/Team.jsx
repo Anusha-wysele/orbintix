@@ -1,23 +1,26 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, MoveUp } from 'lucide-react';
+import member1 from '../assets/IMG_5762 (1).PNG';
+import member2 from '../assets/Media.jfif';
+import member3 from '../assets/WhatsApp Image 2026-02-20 at 6.23.15 PM.jpeg';
 
 const Team = () => {
     const teamMembers = [
         {
-            name: "Arnav Gillespie",
+            name: "Sindhu Vandana",
+            role: "DIRECTOR OF OPERATIONS",
+            image: member1
+        },
+        {
+            name: "Tejasri K",
+            role: "HEAD OF GLOBAL OPERATIONS",
+            image: member2
+        },
+        {
+            name: "Shiva Vunnam",
             role: "MANAGING DIRECTOR",
-            image: "https://images.pexels.com/photos/10041273/pexels-photo-10041273.jpeg"
-        },
-        {
-            name: "Edward Richardson",
-            role: "TECHNICAL ARCHITECT",
-            image: "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg"
-        },
-        {
-            name: "Zak Thompson",
-            role: "SENIOR PROJECT LEAD",
-            image: "https://images.pexels.com/photos/29995735/pexels-photo-29995735.jpeg"
+            image: member3
         }
     ];
 
@@ -99,7 +102,7 @@ const Team = () => {
 
                     {/* Right Column: Cards Grid */}
                     <div className="w-full lg:w-[70%]">
-                        <div className="flex flex-row gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {teamMembers.map((member, index) => (
                                 <motion.div
                                     key={index}
@@ -109,11 +112,11 @@ const Team = () => {
                                     transition={{ duration: 0.8, delay: index * 0.2 }}
                                     className="group"
                                 >
-                                    <div className="aspect-[4/5] w-full overflow-hidden mb-6 relative">
+                                    <div className="aspect-[4/5] w-full overflow-hidden mb-6 relative bg-slate-50 border border-slate-100 rounded-sm">
                                         <img
                                             src={member.image}
                                             alt={member.name}
-                                            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                                            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                                         />
 
                                         {/* Premium Black Overlay at Bottom */}

@@ -3,13 +3,13 @@
 
 @theme {
   --color-primary: #0A192F;
-  --color-secondary: #172A45;
-  --color-accent: #00e5ff;
-  --color-accent-hover: #00b8cc;
+  --color-secondary: #0D1B2A;
+  --color-accent: #FFC107;
+  --color-accent-hover: #E6AF06;
   --color-white: #FFFFFF;
   --color-light-bg: #E6F1FF;
   --color-text-secondary: #8892B0;
-  
+
   --font-outfit: "Outfit", sans-serif;
   --font-dm-sans: "DM Sans", sans-serif;
   --font-roboto-condensed: "Roboto Condensed", sans-serif;
@@ -17,10 +17,11 @@
 }
 
 :root {
+  /* CSS Variables for non-Tailwind usage if needed, matching @theme */
   --primary: #0A192F;
-  --secondary: #172A45;
-  --accent: #00e5ff;
-  --accent-hover: #00b8cc;
+  --secondary: #0D1B2A;
+  --accent: #FFC107;
+  --accent-hover: #E6AF06;
   --white: #FFFFFF;
   --light-bg: #E6F1FF;
   --text-secondary: #8892B0;
@@ -31,7 +32,7 @@ html {
 }
 
 body {
-  @apply bg-primary text-white antialiased;
+  @apply text-white antialiased;
   font-family: var(--font-outfit);
 }
 
@@ -44,24 +45,38 @@ body {
 ::-webkit-scrollbar {
   width: 10px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--primary);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--secondary);
   border: 2px solid var(--primary);
   border-radius: 10px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-outfit);
-  @apply font-black tracking-tight;
+  @apply tracking-tight;
 }
 
-p, li, ul, ol, span, a, button {
+p,
+li,
+ul,
+ol,
+span,
+a,
+button {
   font-family: var(--font-dm-sans);
 }
 
@@ -73,9 +88,17 @@ p, li, ul, ol, span, a, button {
 
 /* Premium Animations */
 @keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 .animate-float {
@@ -95,7 +118,10 @@ p, li, ul, ol, span, a, button {
 }
 
 .text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-accent to-accent-hover;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to right, var(--white), var(--accent), var(--accent-hover));
 }
 
 .shadow-premium {
@@ -108,7 +134,19 @@ p, li, ul, ol, span, a, button {
 
 /* Global CTA Button Styles */
 .cta-animated-btn {
-  @apply bg-[#1ABC9C] text-white relative overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(26,188,156,0.4)] active:scale-95;
+  background-color: #1ABC9C;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.cta-animated-btn:hover {
+  box-shadow: 0 0 20px rgba(26, 188, 156, 0.4);
+}
+
+.cta-animated-btn:active {
+  transform: scale(0.95);
 }
 
 .ripple-pulse {
@@ -122,6 +160,13 @@ p, li, ul, ol, span, a, button {
 }
 
 @keyframes ripple {
-  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-  100% { transform: translate(-50%, -50%) scale(20); opacity: 0; }
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(20);
+    opacity: 0;
+  }
 }

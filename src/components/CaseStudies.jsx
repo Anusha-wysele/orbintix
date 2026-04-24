@@ -112,19 +112,19 @@ export default function CaseStudies() {
                 </div>
 
                 {/* Grid Layout - 4 Columns */}
-                <motion.div 
+                <motion.div
                     variants={containerVariants}
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true }}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-slate-100 border border-slate-100 overflow-hidden"
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 bg-slate-100 border border-slate-100 overflow-hidden"
                 >
                     {caseStudies.map((study, index) => (
                         <motion.div
                             key={index}
                             variants={itemVariants}
                             onClick={() => navigate(study.path)}
-                            className="group relative h-[500px] bg-primary cursor-pointer overflow-hidden"
+                            className="group relative h-[350px] bg-primary cursor-pointer overflow-hidden"
                         >
                             {/* Static Image with increased default visibility */}
                             <img
@@ -132,13 +132,13 @@ export default function CaseStudies() {
                                 alt={study.title}
                                 className="absolute inset-0 w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                             />
-                            
+
                             {/* Constant Dark Gradient Overlay for readability */}
                             <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/40 to-transparent opacity-90 group-hover:opacity-0 transition-opacity duration-500" />
 
                             {/* Default Content Overlay */}
                             <div className="absolute inset-0 p-10 flex flex-col justify-end z-20 group-hover:opacity-0 transition-opacity duration-500">
-                                <motion.span 
+                                <motion.span
                                     initial={{ opacity: 0, x: -10 }}
                                     whileInView={{ opacity: 1, x: 0 }}
                                     transition={{ delay: 0.6 + (index * 0.1) }}
@@ -146,16 +146,16 @@ export default function CaseStudies() {
                                 >
                                     {study.category}
                                 </motion.span>
-                                <motion.h3 
+                                <motion.h3
                                     initial={{ opacity: 0, y: 10 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.7 + (index * 0.1) }}
-                                    style={{ fontWeight: 200 }} 
-                                    className="text-2xl text-primary leading-tight tracking-tight mb-4 uppercase"
+                                    style={{ fontWeight: 200 }}
+                                    className="text-2xl text-white leading-tight tracking-tight mb-4 uppercase"
                                 >
                                     {study.title}
                                 </motion.h3>
-                                <motion.div 
+                                <motion.div
                                     initial={{ opacity: 0 }}
                                     whileInView={{ opacity: 1 }}
                                     transition={{ delay: 0.8 + (index * 0.1) }}
@@ -197,14 +197,14 @@ export default function CaseStudies() {
                 </motion.div>
 
                 {/* View All Projects CTA */}
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.8 }}
-                    className="mt-24 text-center"
+                    className="mt-10 text-center"
                 >
-                    <button 
+                    <button
                         onClick={() => navigate('/case-studies')}
                         className="group relative inline-flex items-center gap-6 bg-primary text-white px-12 py-6 overflow-hidden"
                     >

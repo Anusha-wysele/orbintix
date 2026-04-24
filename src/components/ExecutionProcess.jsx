@@ -35,9 +35,9 @@ const processSteps = [
 
 const ExecutionProcess = () => {
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white overflow-hidden">
+    <section className="py-10 px-4 sm:px-6 lg:px-8 bg-white overflow-hidden">
       <div className="max-w-[1600px] mx-auto">
-        
+
         {/* Section Header */}
         <div className="flex flex-col mb-16 px-4">
           <motion.div
@@ -70,7 +70,7 @@ const ExecutionProcess = () => {
               transition={{ delay: 0.1 }}
               className="text-slate-500 max-w-md text-sm leading-relaxed font-light mb-2"
             >
-              A systematic approach from discovery to deployment, ensuring 
+              A systematic approach from discovery to deployment, ensuring
               alignment with your strategic vision and operational excellence.
             </motion.p>
           </div>
@@ -89,12 +89,12 @@ const ExecutionProcess = () => {
             >
               {/* Image & Hover Content Reveal Area */}
               <div className="relative h-[450px] overflow-hidden">
-                <img 
-                  src={step.image} 
-                  alt={step.title} 
+                <img
+                  src={step.image}
+                  alt={step.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                
+
                 {/* Large Background Step Number */}
                 <span className="absolute top-8 left-8 text-white/20 text-6xl font-black italic tracking-tighter transition-all duration-500 group-hover:text-white/40 select-none">
                   {step.number}
@@ -102,28 +102,28 @@ const ExecutionProcess = () => {
 
                 {/* Hover Slide-up Content Overlay */}
                 <div className="absolute inset-x-0 bottom-0 bg-white/95 flex flex-col justify-end p-10 transform translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-[0.33, 1, 0.68, 1] z-30">
-                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FFC107] mb-4">
-                        Phase {step.number}
-                    </span>
-                    <p className="text-slate-600 text-sm leading-relaxed font-light mb-8">
-                        {step.description}
-                    </p>
-                    <div className="flex items-center gap-4 text-primary font-bold text-[10px] uppercase tracking-[0.3em] cursor-pointer hover:text-[#FFC107] transition-colors group/read">
-                        Read More
-                        <div className="w-12 h-[1px] bg-[#FFC107] origin-left scale-x-0 group-hover/read:scale-x-100 transition-transform duration-500" />
-                    </div>
+                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FFC107] mb-4">
+                    Phase {step.number}
+                  </span>
+                  <p className="text-slate-600 text-sm leading-relaxed font-light mb-8">
+                    {step.description}
+                  </p>
+                  <div className="flex items-center gap-4 text-primary font-bold text-[10px] uppercase tracking-[0.3em] cursor-pointer hover:text-[#FFC107] transition-colors group/read">
+                    Read More
+                    <div className="w-12 h-[1px] bg-[#FFC107] origin-left scale-x-0 group-hover/read:scale-x-100 transition-transform duration-500" />
+                  </div>
                 </div>
 
               </div>
 
               {/* Static Footer - Title below the card contents */}
-              <div className="p-8 pb-10 bg-white border-t border-slate-50 relative z-20">
+              <div className="p-8 pb-10 bg-primary relative z-20">
                 <div className="flex items-center gap-4 mb-2">
-                   <div className="w-6 h-[1px] bg-[#FFC107]" />
-                   <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[#FFC107]">{step.tag}</span>
+                  <div className="w-6 h-[1px] bg-[#FFC107]" />
+                  <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[#FFC107]">{step.tag}</span>
                 </div>
-                <h3 className="text-xl text-primary font-normal tracking-tight transition-colors duration-300 group-hover:text-[#FFC107]"
-                    style={{ fontFamily: 'Outfit, sans-serif' }}
+                <h3 className="text-xl text-white font-normal tracking-tight transition-colors duration-300 group-hover:text-[#FFC107]"
+                  style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 100 }}
                 >
                   {step.title}
                 </h3>

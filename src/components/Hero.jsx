@@ -13,7 +13,7 @@ import offshoreImg from "../assets/offshore.jpg";
 const slides = [
   {
     id: 1,
-    label: "Digital Engineering",
+    label: "Enterprise Digital Transformation Services",
     title: "Scalable Architecture: High-performance engineering for the modern enterprise",
     desc: "We design and build resilient digital platforms that align cutting-edge frontend experiences with bulletproof backend systems — accelerating your time to market globally.",
     image: "https://images.pexels.com/photos/36169771/pexels-photo-36169771.jpeg",
@@ -395,7 +395,7 @@ const Hero = () => {
                 <button
                   onClick={handlePrev}
                   disabled={isTransitioning}
-                  className="p-2 rounded-full text-white/50 hover:text-[#FFC107] hover:bg-white/5 transition-all duration-200 active:scale-90 disabled:opacity-30"
+                  className="p-2 rounded-full text-[#FFC107] hover:text-white hover:bg-[#FFC107] transition-all duration-200 active:scale-90 disabled:opacity-30"
                 >
                   <ChevronLeft size={18} />
                 </button>
@@ -403,7 +403,7 @@ const Hero = () => {
                 <button
                   onClick={handleNext}
                   disabled={isTransitioning}
-                  className="p-2 rounded-full text-white/50 hover:text-[#FFC107] hover:bg-white/5 transition-all duration-200 active:scale-90 disabled:opacity-30"
+                  className="p-2 rounded-full text-[#FFC107] hover:text-white hover:bg-[#FFC107] transition-all duration-200 active:scale-90 disabled:opacity-30"
                 >
                   <ChevronRight size={18} />
                 </button>

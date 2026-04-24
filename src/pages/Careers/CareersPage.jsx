@@ -72,47 +72,54 @@ export default function CareersPage() {
     }, [search, filters]);
 
     return (
-        <div className="bg-primary min-h-screen font-outfit relative overflow-hidden">
-            {/* Background Texture */}
-            <div className="absolute inset-0 dot-grid opacity-[0.03] pointer-events-none" />
+        <div className="bg-white min-h-screen font-outfit relative overflow-hidden">
+            {/* Dynamic Background Elements */}
+            <div className="absolute inset-0 z-0 pointer-events-none">
+                <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px]" />
+                <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px]" />
+                <div className="absolute inset-0 dot-grid opacity-[0.1]" />
+            </div>
 
             <CareersHero />
 
-            <CultureSection />
+            {/* <CultureSection /> */}
 
             {/* Jobs Section */}
-            <div id="open-positions" className="scroll-mt-[100px] bg-primary py-24 relative z-10">
-                <div className="max-w-7xl mx-auto px-6 mb-16 text-center lg:text-left">
+            <div id="open-positions" className="scroll-mt-[100px] bg-white py-14 relative z-10">
+                <div className="max-w-7xl mx-auto px-6 text-center lg:text-left">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                     >
-                        <span className="text-[10px] font-black text-accent uppercase tracking-[0.4em] mb-4 inline-block">Opportunities</span>
+                        <span className="text-[10px] font-black text-accent uppercase tracking-[0.4em] mb-4 inline-block">Global Opportunities</span>
                         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-                            <h3 className="text-5xl md:text-6xl font-black text-white tracking-tighter uppercase leading-[0.9]">Open Positions</h3>
-                            <p className="text-text-secondary font-medium font-dm-sans">Found <span className="text-accent font-bold">{filteredJobs.length}</span> active roles</p>
+                            <h3 className="text-4xl md:text-5xl font-black text-primary tracking-tighter uppercase leading-[0.9]">Open <span className="text-accent italic">Positions</span></h3>
+                            <p className="text-primary font-medium font-dm-sans uppercase text-[14px] tracking-[0.2em]">Active Roles: <span className="text-accent font-black">{filteredJobs.length}</span></p>
                         </div>
                     </motion.div>
                 </div>
 
-                <FilterBar
-                    search={search}
-                    setSearch={setSearch}
-                    filters={filters}
-                    setFilters={setFilters}
-                    view={view}
-                    setView={setView}
-                    sort={sort}
-                    setSort={setSort}
-                    availableFilters={availableFilters}
-                />
 
-                <div className="max-w-7xl mx-auto px-6 py-20">
+                <div data-aos="fade-up">
+                    <FilterBar
+                        search={search}
+                        setSearch={setSearch}
+                        filters={filters}
+                        setFilters={setFilters}
+                        view={view}
+                        setView={setView}
+                        sort={sort}
+                        setSort={setSort}
+                        availableFilters={availableFilters}
+                    />
+                </div>
+
+                <div className="max-w-7xl mx-auto px-6 py-10" data-aos="fade-up">
                     {loading ? (
                         <div className={`grid ${view === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'} gap-8`}>
                             {[...Array(6)].map((_, i) => (
-                                <div key={i} className="bg-secondary/50 border border-white/5 rounded-3xl h-80 animate-pulse" />
+                                <div key={i} className="bg-primary/5 border border-primary/10 rounded-3xl h-80 animate-pulse" />
                             ))}
                         </div>
                     ) : currentJobs.length > 0 ? (
@@ -140,8 +147,8 @@ export default function CareersPage() {
                             />
                         </>
                     ) : (
-                        <div className="text-center py-32 border border-dashed border-white/10 rounded-[3rem] bg-secondary/20">
-                            <div className="text-white/40 mb-6 font-dm-sans">No positions correlate with your current search.</div>
+                        <div className="text-center py-32 border border-dashed border-primary/10 rounded-[3rem] bg-primary/5">
+                            <div className="text-primary/40 mb-6 font-dm-sans uppercase font-black text-xs tracking-widest">No positions correlate with your current search.</div>
                             <button
                                 onClick={() => { setSearch(""); setFilters({ location: [], type: [], level: [] }); }}
                                 className="text-accent font-black uppercase text-xs tracking-widest border-b border-accent/30 pb-2 hover:border-accent transition-all"
@@ -153,7 +160,6 @@ export default function CareersPage() {
                 </div>
             </div>
 
-            <BenefitsSection />
 
             <ApplyModal
                 isOpen={!!selectedJob}

@@ -1,29 +1,9 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Upload, CheckCircle2, Loader2 } from "lucide-react";
+import { X, Upload, CheckCircle2, Loader2, Send } from "lucide-react";
 
 export default function ApplyModal({ job, isOpen, onClose }) {
   const [formState, setFormState] = useState("idle"); // idle, submitting, success
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    resume: null,
-    coverLetter: ""
-  });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormState("submitting");
-    
-    // Simulate API call
-    setTimeout(() => {
-      setFormState("success");
-    }, 2000);
-  };
-
-  const handleFileChange = (e) => {
-    setFormData({ ...formData, resume: e.target.files[0] });
-  };
 
   return (
     <AnimatePresence>
@@ -36,134 +16,73 @@ export default function ApplyModal({ job, isOpen, onClose }) {
             onClick={onClose}
             className="absolute inset-0 bg-primary/95 backdrop-blur-md"
           />
-          
+
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="relative w-full max-w-2xl bg-secondary border border-white/10 rounded-[2.5rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.5)] font-outfit"
+            className="relative w-full max-w-2xl bg-white border border-primary/10 rounded-sm overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.1)] font-outfit"
           >
             {/* Background Glow */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full blur-[80px] -mr-32 -mt-32 pointer-events-none" />
 
             <div className="p-8 md:p-12 relative z-10">
-              <button 
+              <button
                 onClick={onClose}
-                className="absolute top-8 right-8 p-3 rounded-full bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all"
+                className="absolute top-8 right-8 p-3 rounded-full bg-primary/5 border border-primary/10 text-primary/40 hover:text-primary hover:bg-primary/10 transition-all"
               >
                 <X size={20} />
               </button>
 
-              {formState === "success" ? (
-                <div className="py-12 text-center">
-                  <div className="flex justify-center mb-10">
-                    <div className="w-24 h-24 bg-accent/10 rounded-full flex items-center justify-center text-accent shadow-[0_0_40px_rgba(0,191,255,0.2)]">
-                      <CheckCircle2 size={48} />
-                    </div>
-                  </div>
-                  <h2 className="text-4xl font-black text-white mb-4 uppercase tracking-tighter">Application Sent!</h2>
-                  <p className="text-text-secondary mb-12 max-w-sm mx-auto font-dm-sans">
-                    Thanks for applying for the <span className="text-white font-bold">{job?.title}</span> role. Our elite squad will review your profile and get back to you soon.
-                  </p>
-                  <button 
-                    onClick={onClose}
-                    className="group relative px-12 py-5 bg-accent text-primary font-black uppercase text-xs tracking-widest rounded-full overflow-hidden transition-all hover:scale-105 hover:shadow-[0_20px_40px_rgba(0,191,255,0.2)]"
-                  >
-                    CLOSE WINDOW
-                  </button>
+              <div className="mb-12">
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent">How to Apply</span>
+                <h2 className="text-xl font-medium text-primary mt-3 uppercase tracking-tighter leading-none">{job?.title}</h2>
+                <div className="flex gap-4 mt-3">
+                  <p className="text-primary/40 text-xs font-bold uppercase tracking-widest">{job?.location}</p>
+                  <span className="w-1 h-1 rounded-full bg-primary/20 my-auto" />
+                  <p className="text-primary/40 text-xs font-bold uppercase tracking-widest">{job?.type}</p>
                 </div>
-              ) : (
-                <>
-                  <div className="mb-12">
-                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent">Apply Now</span>
-                    <h2 className="text-4xl font-black text-white mt-3 uppercase tracking-tighter leading-none">{job?.title}</h2>
-                    <div className="flex gap-4 mt-3">
-                        <p className="text-text-secondary text-xs font-bold uppercase tracking-widest">{job?.location}</p>
-                        <span className="w-1 h-1 rounded-full bg-white/20 my-auto" />
-                        <p className="text-text-secondary text-xs font-bold uppercase tracking-widest">{job?.type}</p>
-                    </div>
-                  </div>
+              </div>
 
-                  <form onSubmit={handleSubmit} className="space-y-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      <div className="space-y-3">
-                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary ml-1">Full Name</label>
-                        <input
-                          required
-                          type="text"
-                          placeholder="John Doe"
-                          className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all font-dm-sans"
-                          value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        />
-                      </div>
-                      <div className="space-y-3">
-                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary ml-1">Email Address</label>
-                        <input
-                          required
-                          type="email"
-                          placeholder="john@example.com"
-                          className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all font-dm-sans"
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        />
-                      </div>
-                    </div>
+              <div className="space-y-10">
+                <div className="p-10 bg-primary/5 rounded-sm border border-primary/10 relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 w-24 h-24 border-t-4 border-r-4 border-accent -mr-1 -mt-1" />
 
-                    <div className="space-y-3">
-                      <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary ml-1">Resume / CV</label>
-                      <div className="relative group">
-                        <input
-                          required
-                          type="file"
-                          accept=".pdf,.doc,.docx"
-                          onChange={handleFileChange}
-                          className="absolute inset-0 opacity-0 cursor-pointer z-10"
-                        />
-                        <div className={`w-full bg-white/5 border-2 border-dashed rounded-2xl p-10 flex flex-col items-center justify-center transition-all ${formData.resume ? "border-accent bg-accent/5" : "border-white/10 group-hover:border-accent/30 group-hover:bg-white/10"}`}>
-                          {formData.resume ? (
-                            <div className="text-center animate-in fade-in zoom-in duration-300">
-                              <CheckCircle2 size={32} className="text-accent mx-auto mb-3" />
-                              <span className="text-sm text-white font-bold">{formData.resume.name}</span>
-                            </div>
-                          ) : (
-                            <div className="text-center">
-                              <Upload size={32} className="text-white/20 mx-auto mb-3 group-hover:text-accent transition-colors" />
-                              <span className="text-sm text-white/40 font-medium font-dm-sans">Click or drag PDF to upload</span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
+                  <p className="text-primary/70 text-sm leading-relaxed font-medium mb-4">
+                    We have moved to a direct transmission process for all career inquiries. To ensure your application is reviewed by the appropriate unit, please follow these steps:
+                  </p>
 
-                    <div className="space-y-3">
-                      <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary ml-1">Cover Letter (Optional)</label>
-                      <textarea
-                        rows={4}
-                        placeholder="Tell us why you're a great fit..."
-                        className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all font-dm-sans resize-none"
-                        value={formData.coverLetter}
-                        onChange={(e) => setFormData({ ...formData, coverLetter: e.target.value })}
-                      />
-                    </div>
+                  <ul className="space-y-2 mb-6">
+                    {[
+                      "Attach your latest Resume/CV and Portfolio.",
+                      "Mention the job title in your email subject.",
+                      "Send all documents to the address below."
+                    ].map((step, i) => (
+                      <li key={i} className="flex items-start gap-4">
+                        <div className="w-5 h-5 rounded-full bg-accent text-primary flex items-center justify-center text-[10px] font-black shrink-0 mt-1">{i + 1}</div>
+                        <span className="text-primary font-medium text-xs uppercase tracking-tight">{step}</span>
+                      </li>
+                    ))}
+                  </ul>
 
-                    <button
-                      disabled={formState === "submitting"}
-                      type="submit"
-                      className="w-full py-6 bg-accent text-primary font-black uppercase text-xs tracking-widest rounded-2xl transition-all hover:scale-[1.02] hover:shadow-[0_20px_40px_rgba(0,191,255,0.2)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                  <div className="bg-white p-8 rounded-sm border border-primary/5 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div>
+                      <span className="text-[10px] font-black uppercase tracking-[0.3em] text-accent mb-2 block">Application Portal</span>
+                      <a href="mailto:info@orbintx.com" className="text-lg font-medium text-primary hover:text-accent transition-colors">info@orbintx.com</a>
+                    </div>
+                    <a
+                      href={`mailto:info@orbintx.com?subject=Application for ${job?.title}`}
+                      className="px-10 py-5 bg-primary text-white font-black uppercase text-[10px] tracking-widest rounded-full hover:bg-accent hover:text-primary transition-all flex items-center gap-3 shadow-2xl"
                     >
-                      {formState === "submitting" ? (
-                        <>
-                          <Loader2 size={18} className="animate-spin" />
-                          Submitting...
-                        </>
-                      ) : (
-                        "Submit Application"
-                      )}
-                    </button>
-                  </form>
-                </>
-              )}
+                      Send Resume <Send size={14} />
+                    </a>
+                  </div>
+                </div>
+
+                <p className="text-center text-primary/30 text-[10px] font-black uppercase tracking-[0.3em]">
+                  Confidentiality Guaranteed • Global Recruitment Framework
+                </p>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -171,3 +90,4 @@ export default function ApplyModal({ job, isOpen, onClose }) {
     </AnimatePresence>
   );
 }
+

@@ -3,6 +3,7 @@ import Hero from "../components/Hero";
 import About from "../components/About";
 import Services from "../components/Services";
 import FadeIn from "../components/FadeIn";
+import GrowthSection from "../components/GrowthSection";
 
 // Lazy load secondary sections
 const CaseStudies = lazy(() => import("../components/CaseStudies"));
@@ -23,48 +24,54 @@ const Home = () => {
   return (
     <div className="bg-primary min-h-screen">
       <Hero />
-      <FadeIn>
+      <div data-aos="fade-up">
         <Services />
-      </FadeIn>
-      <FadeIn>
+      </div>
+      <div data-aos="fade-right">
         <About />
-      </FadeIn>
+      </div>
 
 
       <Suspense fallback={<SectionLoader />}>
-        <FadeIn>
+        <div data-aos="fade-left">
           <CaseStudies />
-        </FadeIn>
+        </div>
       </Suspense>
 
       <Suspense fallback={<SectionLoader />}>
-        <FadeIn>
+        <div data-aos="fade-up">
+          <GrowthSection />
+        </div>
+      </Suspense>
+
+      <Suspense fallback={<SectionLoader />}>
+        <div data-aos="zoom-in">
           <ExecutionProcess />
-        </FadeIn>
+        </div>
       </Suspense>
 
       <Suspense fallback={<SectionLoader />}>
-        <FadeIn>
+        <div data-aos="fade-up">
           <TechStack />
-        </FadeIn>
+        </div>
       </Suspense>
 
       <Suspense fallback={<SectionLoader />}>
-        <FadeIn>
+        <div data-aos="fade-right">
           <WhyChooseUs />
-        </FadeIn>
+        </div>
       </Suspense>
 
       <Suspense fallback={<SectionLoader />}>
-        <FadeIn>
+        <div data-aos="fade-left">
           <HiringSection />
-        </FadeIn>
+        </div>
       </Suspense>
 
       <Suspense fallback={<SectionLoader />}>
-        <FadeIn>
+        <div data-aos="fade-up">
           <FinalCTA />
-        </FadeIn>
+        </div>
       </Suspense>
     </div>
   );

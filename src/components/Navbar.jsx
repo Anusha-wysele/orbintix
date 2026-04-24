@@ -1,13 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { ChevronDown, Menu, X, Globe, Rocket, Users, Cloud, User, LogIn } from "lucide-react";
+import { ChevronDown, Menu, X, Globe, Rocket, Users, Cloud, User, LogIn, Shield, Database } from "lucide-react";
 import { routes } from "../routes/config";
 
 const ICON_MAP = {
   Globe: Globe,
   Rocket: Rocket,
   Users: Users,
-  Cloud: Cloud
+  Cloud: Cloud,
+  Shield: Shield,
+  Database: Database
 };
 
 const Navbar = () => {
@@ -110,11 +112,11 @@ const Navbar = () => {
 
                   {/* SERVICES DROPDOWN PANEL */}
                   <div
-                    className={`absolute top-full left-1/2 -translate-x-1/2 w-[600px] transition-all duration-300 transform ${isServicesOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible pointer-events-none'
+                    className={`absolute top-full left-1/2 -translate-x-1/2 w-[1000px] transition-all duration-300 transform ${isServicesOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible pointer-events-none'
                       }`}
                   >
-                    <div className="bg-[#172A45]/95 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-6 mt-4 grid grid-cols-2 gap-4">
-                      <div className="col-span-2 pb-4 mb-4 border-b border-white/5 text-[10px] font-black tracking-[0.3em] uppercase text-[#00e5ff]">
+                    <div className="bg-black/95 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-8 mt-4 grid grid-cols-3 gap-6">
+                      <div className="col-span-3 pb-4 mb-4 border-b border-white/5 text-[10px] font-black tracking-[0.3em] uppercase text-[#00e5ff]">
                         Our Expertise
                       </div>
                       {item.dropdown.map((sub) => (
@@ -122,7 +124,7 @@ const Navbar = () => {
                           key={sub.name}
                           to={sub.path}
                           onClick={() => setIsServicesOpen(false)}
-                          className={({ isActive }) => `flex items-start gap-4 p-4 transition-all duration-300 border-r-4 border-transparent hover:bg-white/5 hover:border-[#00e5ff] group/item ${isActive ? 'bg-white/5 border-[#00e5ff]' : ''}`}
+                          className={({ isActive }) => `flex items-start gap-4 p-4 transition-all duration-300 border-r-4 border-transparent hover:bg-white/5 hover:border-[#FFC107] group/item ${isActive ? 'bg-white/5 border-[#00e5ff]' : ''}`}
                         >
                           {({ isActive }) => (
                             <>
@@ -199,7 +201,7 @@ const Navbar = () => {
             >
               <div className="mt-4 bg-[#FFC107] overflow-hidden border border-black/5">
                 <Link
-                  to="/login"
+                  to="/signin"
                   className="flex items-center gap-3 w-full px-6 py-4 text-white hover:bg-primary transition-colors font-bold text-xs uppercase tracking-wider"
                   onClick={() => setIsLoginOpen(false)}
                 >
@@ -273,7 +275,7 @@ const Navbar = () => {
           {/* Mobile Login Actions */}
           <div className="mt-8 grid grid-cols-2 gap-4 pt-8 border-t">
             <Link
-              to="/login"
+              to="/signin"
               className="p-4 bg-[#FFC107] text-black text-center font-bold uppercase text-xs tracking-widest rounded-xl shadow-lg"
               onClick={() => setIsMobileMenuOpen(false)}
             >

@@ -35,9 +35,12 @@ const values = [
 
 export default function CultureSection() {
   return (
-    <section className="py-32 px-6 bg-primary relative overflow-hidden font-outfit">
-      {/* Decorative background element */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-accent/5 via-transparent to-transparent opacity-50 pointer-events-none" />
+    <section className="py-32 px-6 bg-white relative overflow-hidden font-outfit">
+      {/* Dynamic Background Elements */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px]" />
+      </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-24">
@@ -45,14 +48,14 @@ export default function CultureSection() {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="inline-block py-1 px-3 rounded-full bg-accent/10 border border-accent/20 text-accent text-[10px] font-bold tracking-[0.4em] uppercase mb-6"
+            className="inline-block py-1 px-3 rounded-full bg-accent/10 border border-accent/20 text-accent text-[10px] font-black tracking-[0.4em] uppercase mb-6"
           >
             Our Philosophy
           </motion.div>
-          <h3 className="text-5xl md:text-7xl font-black text-white tracking-tighter leading-none mb-6 uppercase">
-            CORE VALUES
+          <h3 className="text-5xl md:text-7xl font-black text-primary tracking-tighter leading-none mb-6 uppercase">
+            CORE <span className="text-accent italic">VALUES</span>
           </h3>
-          <p className="text-text-secondary text-lg md:text-xl max-w-2xl mx-auto font-medium font-dm-sans">
+          <p className="text-primary/50 text-lg md:text-xl max-w-2xl mx-auto font-medium font-dm-sans uppercase tracking-[0.1em]">
             The principles that define our mission and how we build the future of tech.
           </p>
         </div>
@@ -68,24 +71,18 @@ export default function CultureSection() {
               whileHover={{ y: -12, transition: { duration: 0.3 } }}
               className="relative group h-full"
             >
-              {/* Card Background with Glassmorphism */}
-              <div className="relative h-full p-10 rounded-[2.5rem] bg-secondary/50 border border-white/5 shadow-[0_10px_40px_rgba(0,0,0,0.1)] backdrop-blur-2xl flex flex-col transition-all duration-500 group-hover:bg-secondary group-hover:border-accent/20 group-hover:shadow-[0_30px_70px_rgba(0,0,0,0.3)] overflow-hidden">
+              <div className="relative h-full p-10 rounded-[3rem] bg-white border border-primary/5 shadow-[0_10px_40px_rgba(0,0,0,0.05)] flex flex-col transition-all duration-500 group-hover:border-accent/20 group-hover:shadow-[0_30px_70px_rgba(0,0,0,0.1)] overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 border-t-4 border-r-4 border-accent opacity-0 group-hover:opacity-100 transition-all duration-500 -mr-1 -mt-1" />
                 
-                {/* Accent Glow */}
-                <div className={`absolute -top-24 -right-24 w-48 h-48 rounded-full blur-[60px] opacity-0 group-hover:opacity-20 transition-opacity duration-700 bg-accent/40`} />
-
-                <div className="mb-10 inline-flex items-center justify-center p-5 rounded-3xl bg-white/5 border border-white/10 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
-                  {value.icon}
+                <div className="mb-10 inline-flex items-center justify-center p-5 rounded-3xl bg-primary/5 border border-primary/10 group-hover:bg-accent group-hover:text-primary transition-all duration-500 shadow-sm">
+                  {React.cloneElement(value.icon, { className: "group-hover:text-primary transition-colors" })}
                 </div>
 
-                <h4 className="text-2xl font-bold text-white mb-5 tracking-tight group-hover:text-accent transition-colors uppercase">{value.title}</h4>
+                <h4 className="text-2xl font-black text-primary mb-5 tracking-tight group-hover:text-accent transition-colors uppercase leading-tight">{value.title}</h4>
                 
-                <p className="text-text-secondary text-sm leading-relaxed font-medium group-hover:text-white/80 transition-colors font-dm-sans">
+                <p className="text-primary/60 text-sm leading-relaxed font-medium transition-colors font-dm-sans">
                   {value.desc}
                 </p>
-
-                {/* Bottom decorative bar */}
-                <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-transparent via-accent/0 to-transparent transition-all duration-700 group-hover:via-accent/40" />
               </div>
             </motion.div>
           ))}
@@ -94,3 +91,4 @@ export default function CultureSection() {
     </section>
   );
 }
+

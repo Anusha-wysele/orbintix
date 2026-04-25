@@ -32,12 +32,12 @@ const Contact = () => {
       detail: "+1 3072237343",
       sub: "Mon-Fri, 9am - 6pm MST"
     },
-    {
-      icon: MapPin,
-      title: "Corporate HQ",
-      detail: "30 N Gould St Ste R",
-      sub: "Sheridan, WY 82801, USA"
-    }
+    // {
+    //   icon: MapPin,
+    //   title: "Corporate HQ",
+    //   detail: "30 N Gould St Ste R",
+    //   sub: "Sheridan, WY 82801, USA"
+    // }
   ];
 
   const containerVariants = {
@@ -325,16 +325,16 @@ const Contact = () => {
         </div>
 
         {/* Map Section */}
-        <div className="mt-16 relative" data-aos="fade-up">
+       {/* <div className="mt-16 relative" data-aos="fade-up">*/}
           {/* Reference Style Background Box */}
 
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="rounded-sm overflow-hidden border border-primary/10 shadow-2xl relative group h-[600px]"
-          >
-            <div className="w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000">
+          > */}
+            {/* <div className="w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2836.191763784013!2d-106.9558914!3d44.79612!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5335fabc5c610497%3A0x6b772439121d589e!2s30%20N%20Gould%20St%2C%20Sheridan%2C%20WY%2082801!5e0!3m2!1sen!2sus!4v1713600000000!5m2!1sen!2sus"
                 width="100%"
@@ -345,10 +345,10 @@ const Contact = () => {
                 referrerPolicy="no-referrer-when-downgrade"
                 title="Sheridan WY HQ"
               />
-            </div>
+            </div> */}
 
             {/* Floating Map Overlay */}
-            <div className="absolute top-10 left-10 max-w-sm bg-white p-10 border-l-8 border-accent shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-[-20px] group-hover:translate-x-0">
+            {/* <div className="absolute top-10 left-10 max-w-sm bg-white p-10 border-l-8 border-accent shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-[-20px] group-hover:translate-x-0">
               <h4 className="text-[10px] font-black uppercase tracking-[0.5em] text-accent mb-4">Command Center</h4>
               <h3 className="text-3xl font-black uppercase tracking-tighter mb-2 text-primary">Sheridan, WY</h3>
               <p className="text-primary/60 font-medium mb-8">30 N Gould St Ste R, Sheridan, WY 82801, USA</p>
@@ -357,8 +357,8 @@ const Contact = () => {
                   href="https://maps.google.com/?q=30+N+Gould+St+Ste+R+Sheridan+WY+82801"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between group/link border-b border-primary/10 pb-2 hover:border-accent transition-colors"
-                >
+                  className="flex items-center justify-between group/link border-b border-primary/10 pb-2 hover:border-accent transition-colors" */}
+                {/* >
                   <span className="text-[10px] font-black uppercase tracking-widest text-primary">Get Directions</span>
                   <ChevronRight size={16} className="text-accent group-hover/link:translate-x-2 transition-transform" />
                 </a>
@@ -369,7 +369,7 @@ const Contact = () => {
               </div>
             </div>
           </motion.div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

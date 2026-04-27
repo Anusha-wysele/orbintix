@@ -3,14 +3,14 @@ import { motion } from 'framer-motion';
 import { ArrowRight, MoveUp } from 'lucide-react';
 import member1 from '../assets/IMG_5762 (1).PNG';
 import member2 from '../assets/Media.jfif';
-import member3 from '../assets/WhatsApp Image 2026-02-20 at 6.23.15 PM.jpeg';
+import member3 from '../assets/Media (1).jfif';
 
 const Team = () => {
     const teamMembers = [
         {
-            name: "Sindhu Vandana",
-            role: "DIRECTOR OF OPERATIONS",
-            image: member1
+            name: "Shiva Vunnam",
+            role: "MANAGING DIRECTOR",
+            image: member3
         },
         {
             name: "Tejasri K",
@@ -18,10 +18,12 @@ const Team = () => {
             image: member2
         },
         {
-            name: "Shiva Vunnam",
-            role: "MANAGING DIRECTOR",
-            image: member3
-        }
+            name: "Sindhu Vandana",
+            role: "DIRECTOR OF OPERATIONS",
+            image: member1
+        },
+
+
     ];
 
     const socialIcons = [
@@ -110,9 +112,9 @@ const Team = () => {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.8, delay: index * 0.2 }}
-                                    className="group"
+                                    className="group "
                                 >
-                                    <div className="aspect-[4/5] w-full overflow-hidden mb-6 relative bg-slate-50 border border-slate-100 rounded-sm">
+                                    <div className="aspect-[4/5] w-full overflow-hidden mb-6 relative bg-gray-50 border border-slate-100 rounded-sm">
                                         <img
                                             src={member.image}
                                             alt={member.name}

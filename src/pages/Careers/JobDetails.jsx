@@ -21,11 +21,11 @@ const JobDetails = () => {
         if (data) {
           setJob({
             id: data._id || data.id,
-            title: data.role || data.title || 'Untitled Role',
+            title: data.job_title || data.role || data.title || 'Untitled Role',
             location: data.location || 'Remote',
-            type: data.jobType || data.type || 'Full-time',
+            type: data.employment_type || data.jobType || data.type || 'Full-time',
             level: data.experience || data.level || 'Entry Level',
-            category: data.category || 'Engineering',
+            category: data.department || data.category || 'Engineering',
             description: data.description || '',
             postedDate: data.jobPostedDate || (data.createdAt ? new Date(data.createdAt).toLocaleDateString() : new Date().toLocaleDateString()),
             responsibilities: data.responsibilities || []

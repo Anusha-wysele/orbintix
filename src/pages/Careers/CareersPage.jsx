@@ -31,7 +31,7 @@ export default function CareersPage() {
         const fetchJobs = async () => {
             try {
                 setLoading(true);
-                const res = await api.get('/jobs/');
+                const res = await api.get('/jobs/', { params: { company: 'orbintix', limit: 100 } });
                 const data = res.data;
                 const rawJobs = Array.isArray(data) ? data : (data.jobs || data.data || []);
                 
@@ -39,11 +39,11 @@ export default function CareersPage() {
                     const cleanDesc = stripHtml(job.description);
                     return {
                         id: job._id || job.id,
-                        title: job.role || job.title || 'Untitled Role',
+                        title: job.job_title || job.role || job.title || 'Untitled Role',
                         location: job.location || 'Remote',
-                        type: job.jobType || job.type || 'Full-time',
+                        type: job.employment_type || job.jobType || job.type || 'Full-time',
                         level: job.experience || job.level || 'Entry Level',
-                        category: job.category || 'Engineering',
+                        category: job.department || job.category || 'Engineering',
                         description: cleanDesc,
                         postedDate: job.jobPostedDate || (job.createdAt ? new Date(job.createdAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]),
                         company_name: job.company_name || job.company || 'wysele',

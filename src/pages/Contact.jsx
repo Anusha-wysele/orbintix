@@ -3,6 +3,7 @@ import { Mail, Phone, MapPin, Send, MessageSquare, Clock, Globe, Shield, ArrowRi
 import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams } from "react-router-dom";
 import contactImg from "../assets/contact.jpg";
+import api from "../services/api";
 
 const Contact = () => {
   const [searchParams] = useSearchParams();
@@ -11,11 +12,45 @@ const Contact = () => {
     service === 'hiring' ? 'Hiring / Talent Inquiry' : ''
   );
   const [formStatus, setFormStatus] = React.useState('idle');
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [phoneNumber, setPhoneNumber] = React.useState('');
+  const [location, setLocation] = React.useState('');
+  const [message, setMessage] = React.useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setFormStatus('sending');
-    setTimeout(() => setFormStatus('success'), 2000);
+
+    const payload = {
+      full_name: name,
+      email: email,
+      phone_number: phoneNumber,
+      location: `orbintix:${location}`,
+      message: subject ? `Subject: ${subject}\n\n${message}` : message,
+      company_name: 'orbintix',
+      company: 'orbintix'
+    };
+
+    try {
+      try {
+        await api.post('/contact/', payload);
+      } catch (err) {
+        // Fallback in case trailing slash is not supported or results in error
+        await api.post('/contact', payload);
+      }
+      setFormStatus('success');
+      // Reset form fields
+      setName('');
+      setEmail('');
+      setPhoneNumber('');
+      setLocation('');
+      setSubject('');
+      setMessage('');
+    } catch (error) {
+      console.error('Failed to submit contact form:', error);
+      setFormStatus('error');
+    }
   };
 
   const contactOptions = [
@@ -250,6 +285,25 @@ const Contact = () => {
                         New Transmission
                       </button>
                     </motion.div>
+                  ) : formStatus === 'error' ? (
+                    <motion.div
+                      key="error"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-center py-20"
+                    >
+                      <div className="w-24 h-24 bg-red-600 text-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
+                        <Mail size={40} className="text-white" />
+                      </div>
+                      <h2 className="text-5xl font-medium uppercase tracking-tighter mb-4 text-red-600">Transmission Failed</h2>
+                      <p className="text-primary/60 mb-12 font-medium">We were unable to transmit your briefing. Please check your network connection and try again.</p>
+                      <button
+                        onClick={() => setFormStatus('idle')}
+                        className="px-12 py-5 bg-primary text-white font-black uppercase text-[11px] tracking-[0.4em] rounded-sm hover:bg-accent hover:text-primary transition-all shadow-xl"
+                      >
+                        Try Again
+                      </button>
+                    </motion.div>
                   ) : (
                     <motion.form
                       key="form"
@@ -264,6 +318,8 @@ const Contact = () => {
                           <input
                             required
                             type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
                             placeholder="OPERATIVE NAME"
                             className="w-full bg-transparent border-b-2 border-primary/10 px-0 py-4 text-primary font-black uppercase tracking-wider focus:outline-none focus:border-accent transition-all placeholder:text-primary/10 text-sm"
                           />
@@ -273,7 +329,34 @@ const Contact = () => {
                           <input
                             required
                             type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             placeholder="EMAIL@ENTERPRISE.COM"
+                            className="w-full bg-transparent border-b-2 border-primary/10 px-0 py-4 text-primary font-black uppercase tracking-wider focus:outline-none focus:border-accent transition-all placeholder:text-primary/10 text-sm"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        <div className="group space-y-2">
+                          <label className="text-[10px] font-black uppercase tracking-[0.3em] text-primary/40 group-focus-within:text-accent transition-colors">Phone Number</label>
+                          <input
+                            required
+                            type="tel"
+                            value={phoneNumber}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
+                            placeholder="PHONE / MOBILE NUMBER"
+                            className="w-full bg-transparent border-b-2 border-primary/10 px-0 py-4 text-primary font-black uppercase tracking-wider focus:outline-none focus:border-accent transition-all placeholder:text-primary/10 text-sm"
+                          />
+                        </div>
+                        <div className="group space-y-2">
+                          <label className="text-[10px] font-black uppercase tracking-[0.3em] text-primary/40 group-focus-within:text-accent transition-colors">Location</label>
+                          <input
+                            required
+                            type="text"
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                            placeholder="CITY, COUNTRY"
                             className="w-full bg-transparent border-b-2 border-primary/10 px-0 py-4 text-primary font-black uppercase tracking-wider focus:outline-none focus:border-accent transition-all placeholder:text-primary/10 text-sm"
                           />
                         </div>
@@ -295,6 +378,8 @@ const Contact = () => {
                         <textarea
                           rows="4"
                           required
+                          value={message}
+                          onChange={(e) => setMessage(e.target.value)}
                           placeholder="DESCRIBE YOUR PROJECT REQUIREMENTS OR STRATEGIC GOALS..."
                           className="w-full bg-transparent border-b-2 border-primary/10 px-0 py-4 text-primary font-black uppercase tracking-wider focus:outline-none focus:border-accent transition-all placeholder:text-primary/10 resize-none text-sm"
                         ></textarea>

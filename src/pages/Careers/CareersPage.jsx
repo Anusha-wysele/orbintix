@@ -5,11 +5,16 @@ import CultureSection from "../../Careers/CultureSection";
 import BenefitsSection from "../../Careers/BenefitsSection";
 import FilterBar from "../../Careers/FilterBar";
 import ApplyModal from "../../Careers/ApplyModal";
-import jobsData from "../../data/jobs.json"
 import JobCard from "../../Careers/JobCard";
 import Pagination from "../../components/common/Pagination";
+import api from "../../services/api";
 
 const JOBS_PER_PAGE = 6;
+
+const stripHtml = (html) => {
+    if (!html) return '';
+    return html.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ');
+};
 
 export default function CareersPage() {
     const [search, setSearch] = useState("");
@@ -18,26 +23,65 @@ export default function CareersPage() {
     const [sort, setSort] = useState("latest");
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedJob, setSelectedJob] = useState(null);
+    const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Simulate loading state
+    // Fetch jobs from backend API
     useEffect(() => {
-        const timer = setTimeout(() => setLoading(false), 800);
-        return () => clearTimeout(timer);
+        const fetchJobs = async () => {
+            try {
+                setLoading(true);
+                const res = await api.get('/jobs/');
+                const data = res.data;
+                const rawJobs = Array.isArray(data) ? data : (data.jobs || data.data || []);
+                
+                const processed = rawJobs.map(job => {
+                    const cleanDesc = stripHtml(job.description);
+                    return {
+                        id: job._id || job.id,
+                        title: job.role || job.title || 'Untitled Role',
+                        location: job.location || 'Remote',
+                        type: job.jobType || job.type || 'Full-time',
+                        level: job.experience || job.level || 'Entry Level',
+                        category: job.category || 'Engineering',
+                        description: cleanDesc,
+                        postedDate: job.jobPostedDate || (job.createdAt ? new Date(job.createdAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]),
+                        company_name: job.company_name || job.company || 'wysele',
+                        status: job.status || 'Published',
+                        rawDescription: job.description // keep original HTML for detail page lookup if needed
+                    };
+                });
+                
+                // Filter only published jobs belonging to orbintix
+                const orbintixJobs = processed.filter(j => 
+                    j.company_name.toLowerCase().includes('orbintix') && 
+                    (j.status.toLowerCase() === 'published' || j.status.toLowerCase() === 'active')
+                );
+                
+                setJobs(orbintixJobs);
+            } catch (err) {
+                console.error("Error fetching jobs from API:", err);
+                setJobs([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchJobs();
     }, []);
 
     // Extract available filters from data
     const availableFilters = useMemo(() => {
         return {
-            location: [...new Set(jobsData.map(j => j.location))],
-            type: [...new Set(jobsData.map(j => j.type))],
-            level: [...new Set(jobsData.map(j => j.level))]
+            location: [...new Set(jobs.map(j => j.location))],
+            type: [...new Set(jobs.map(j => j.type))],
+            level: [...new Set(jobs.map(j => j.level))]
         };
-    }, []);
+    }, [jobs]);
 
     // Filtering & Search Logic
     const filteredJobs = useMemo(() => {
-        return jobsData
+        return jobs
             .filter(job => {
                 const matchesSearch =
                     job.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -53,12 +97,13 @@ export default function CareersPage() {
             .sort((a, b) => {
                 if (sort === "alpha") return a.title.localeCompare(b.title);
                 if (sort === "level") {
-                    const seniority = { "Junior": 1, "Mid-level": 2, "Senior": 3, "Lead": 4 };
+                    const seniority = { "Junior": 1, "Mid-level": 2, "Senior": 3, "Lead": 4, "Entry Level": 1, "Mid Level": 2, "Senior Level": 3, "Lead / Manager": 4 };
                     return (seniority[b.level] || 0) - (seniority[a.level] || 0);
                 }
-                return b.id - a.id; // Latest
+                // Date sort (safe check for Mongo string IDs or numeric IDs)
+                return new Date(b.postedDate) - new Date(a.postedDate) || String(b.id).localeCompare(String(a.id));
             });
-    }, [search, filters, sort]);
+    }, [jobs, search, filters, sort]);
 
     // Pagination Logic
     const totalPages = Math.ceil(filteredJobs.length / JOBS_PER_PAGE);

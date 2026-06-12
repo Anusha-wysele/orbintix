@@ -2,8 +2,8 @@ import { useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { MapPin, Clock, Briefcase, Calendar, ArrowLeft, Send, Shield, Globe, Rocket, CheckCircle2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import jobsData from '../../data/jobs.json';
 import ApplyModal from '../../Careers/ApplyModal';
+import api from '../../services/api';
 
 const JobDetails = () => {
   const { id } = useParams();
@@ -12,10 +12,36 @@ const JobDetails = () => {
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
 
   useEffect(() => {
-    // Simulate data fetching
-    const foundJob = jobsData.find((j) => j.id === parseInt(id));
-    setJob(foundJob);
-    setLoading(false);
+    const fetchJobDetails = async () => {
+      try {
+        setLoading(true);
+        const res = await api.get(`/jobs/${id}`);
+        const data = res.data;
+        
+        if (data) {
+          setJob({
+            id: data._id || data.id,
+            title: data.role || data.title || 'Untitled Role',
+            location: data.location || 'Remote',
+            type: data.jobType || data.type || 'Full-time',
+            level: data.experience || data.level || 'Entry Level',
+            category: data.category || 'Engineering',
+            description: data.description || '',
+            postedDate: data.jobPostedDate || (data.createdAt ? new Date(data.createdAt).toLocaleDateString() : new Date().toLocaleDateString()),
+            responsibilities: data.responsibilities || []
+          });
+        } else {
+          setJob(null);
+        }
+      } catch (err) {
+        console.error("Error fetching job details from API:", err);
+        setJob(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobDetails();
     window.scrollTo(0, 0);
   }, [id]);
 
@@ -127,12 +153,18 @@ const JobDetails = () => {
               <div className="absolute top-0 right-0 w-32 h-32 border-t-8 border-r-8 border-accent -mr-1 -mt-1" />
               <h3 className="text-3xl font-black uppercase tracking-tighter mb-8">Mission <span className="text-accent italic">Overview</span></h3>
               <div className="text-primary/70 leading-relaxed font-medium space-y-6 text-lg">
-                <p>{job.description}</p>
-                <p>
-                  We are looking for a dedicated professional who is passionate about delivering high-quality solutions. 
-                  In this role, you will collaborate with cross-functional teams to design, develop, and implement strategies 
-                  that align with our clients' business goals.
-                </p>
+                {job.description && (job.description.trim().startsWith('<') || job.description.includes('</')) ? (
+                  <div dangerouslySetInnerHTML={{ __html: job.description }} />
+                ) : (
+                  <p>{job.description}</p>
+                )}
+                {!job.description && (
+                  <p>
+                    We are looking for a dedicated professional who is passionate about delivering high-quality solutions. 
+                    In this role, you will collaborate with cross-functional teams to design, develop, and implement strategies 
+                    that align with our clients' business goals.
+                  </p>
+                )}
               </div>
             </motion.div>
 
@@ -144,13 +176,16 @@ const JobDetails = () => {
             >
               <h3 className="text-3xl font-black uppercase tracking-tighter mb-8">Operational <span className="text-accent italic">Requirements</span></h3>
               <ul className="space-y-6">
-                {[
-                  "Proven experience in a similar role within the technology sector.",
-                  "Strong analytical and problem-solving skills.",
-                  "Excellent communication and interpersonal abilities.",
-                  "Ability to work effectively in a fast-paced environment.",
-                  "Relevant certifications or specialized training is a plus."
-                ].map((req, i) => (
+                {(job.responsibilities && job.responsibilities.length > 0
+                  ? job.responsibilities
+                  : [
+                      "Proven experience in a similar role within the technology sector.",
+                      "Strong analytical and problem-solving skills.",
+                      "Excellent communication and interpersonal abilities.",
+                      "Ability to work effectively in a fast-paced environment.",
+                      "Relevant certifications or specialized training is a plus."
+                    ]
+                ).map((req, i) => (
                   <li key={i} className="flex items-start gap-4">
                     <div className="w-6 h-6 rounded-full bg-accent flex items-center justify-center shrink-0 mt-1">
                       <CheckCircle2 size={14} className="text-primary" />

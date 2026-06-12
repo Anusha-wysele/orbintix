@@ -13,6 +13,7 @@ const JobDetails = lazy(() => import('../pages/Careers/JobDetails'));
 const ServicesPage = lazy(() => import('../pages/ServicesPage'));
 
 const Blog = lazy(() => import('../pages/Blog'));
+const BlogDetails = lazy(() => import('../pages/BlogDetails'));
 
 // 404 Page
 const NotFound = lazy(() => import('../pages/NotFound'));
@@ -124,6 +125,13 @@ export const routes = [
     title: 'Blog | Orbintix Technologies',
     label: 'Blog',
     showInNavbar: true,
+  },
+  {
+    path: '/blog/:id',
+    element: BlogDetails,
+    title: 'Blog Details | Orbintix Technologies',
+    label: 'Blog Details',
+    showInNavbar: false,
   },
   {
     path: '/contact',

@@ -1,32 +1,90 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, ChevronRight, Calendar, User, MessageSquare, ArrowRight, Tag } from 'lucide-react';
 import blogData from '../data/blog.json';
+import blogService from '../services/blogService';
 
 const Blog = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 6;
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const categories = ['All', 'AI', 'Cloud', 'Hiring', 'Development', 'Salesforce', 'Consulting'];
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        setLoading(true);
+        const data = await blogService.getAllBlogs({ company: 'orbintix' });
+        let fetchedBlogs = [];
+        if (Array.isArray(data)) fetchedBlogs = data;
+        else if (data.results && Array.isArray(data.results)) fetchedBlogs = data.results;
+        else if (data.blogs && Array.isArray(data.blogs)) fetchedBlogs = data.blogs;
+        else if (data.data && Array.isArray(data.data)) fetchedBlogs = data.data;
+
+        // Decode category prefix
+        const processedBlogs = fetchedBlogs.map(blog => {
+          const hasPrefix = blog.category && blog.category.includes(':');
+          const blogCompany = hasPrefix ? blog.category.split(':')[0] : (blog.company_name || blog.company || 'wysele');
+          const cleanCategory = hasPrefix ? blog.category.split(':')[1] : (blog.category || 'Organisation');
+          return {
+            ...blog,
+            company_name: blogCompany,
+            category: cleanCategory
+          };
+        });
+
+        // Filter only Orbintix blogs client-side
+        const orbintixBlogs = processedBlogs.filter(post =>
+          post.company_name?.toLowerCase() === 'orbintix'
+        );
+
+        if (orbintixBlogs.length > 0) {
+          const mapped = orbintixBlogs.map(post => ({
+            id: post.id || post._id,
+            title: post.title,
+            image: post.image_url || post.img || post.image || 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070',
+            category: post.category,
+            author: post.author || 'Admin',
+            date: post.date || (post.createdAt ? new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })),
+            excerpt: post.excerpt || post.content?.substring(0, 120) + "..." || 'No summary available.',
+            read_time: post.read_time || '5 MIN READ'
+          }));
+          setPosts(mapped);
+        } else {
+          setPosts(blogData.posts);
+        }
+      } catch (err) {
+        console.warn('API error fetching blogs, using local fallback:', err);
+        setPosts(blogData.posts);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBlogs();
+  }, []);
+
+  const categories = ['All', 'Organisation', 'Innovation', 'Technology', 'Culture', 'AI'];
 
   const filteredPosts = useMemo(() => {
     setCurrentPage(1); // Reset to page 1 when filters change
-    return blogData.posts.filter(post => {
+    return posts.filter(post => {
       const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = selectedCategory === 'All' || post.category === selectedCategory;
       return matchesSearch && matchesCategory;
     });
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, posts]);
 
   const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
 
-  const recentPosts = blogData.posts.slice(0, 4);
+  const recentPosts = posts.slice(0, 4);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -139,66 +197,89 @@ const Blog = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <AnimatePresence mode="popLayout">
-                  {currentPosts.map((post, index) => (
-                    <motion.article
-                      layout
-                      key={post.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.6, delay: index * 0.1 }}
-                      className="group bg-white border border-primary/5 hover:border-accent/30 transition-all duration-700 flex flex-col relative"
-                    >
-                      {/* Accent Line on Top */}
-                      <div className="absolute top-0 left-0 w-0 h-1 bg-accent group-hover:w-full transition-all duration-700" />
-
-                      {/* Image Container */}
-                      <div className="relative h-60 overflow-hidden">
-                        <img
-                          src={post.image}
-                          alt={post.title}
-                          className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-40 transition-opacity" />
-
-                        <div className="absolute bottom-4 left-4">
-                          <span className="bg-accent text-primary text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1 shadow-2xl">
-                            {post.category}
-                          </span>
-                        </div>
+                {loading ? (
+                  [...Array(4)].map((_, i) => (
+                    <div key={i} className="animate-pulse bg-white border border-primary/5 p-8 h-[500px] flex flex-col relative">
+                      <div className="bg-primary/10 h-60 w-full mb-6" />
+                      <div className="h-4 bg-primary/10 w-24 mb-4" />
+                      <div className="h-6 bg-primary/10 w-full mb-4" />
+                      <div className="h-4 bg-primary/10 w-3/4 mb-4" />
+                      <div className="mt-auto pt-6 border-t border-primary/5 flex items-center justify-between">
+                        <div className="h-4 bg-primary/10 w-20" />
                       </div>
+                    </div>
+                  ))
+                ) : (
+                  <AnimatePresence mode="popLayout">
+                    {currentPosts.map((post, index) => (
+                      <motion.article
+                        layout
+                        key={post.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: index * 0.1 }}
+                        className="group bg-white border border-primary/5 hover:border-accent/30 transition-all duration-700 flex flex-col relative"
+                      >
+                        {/* Accent Line on Top */}
+                        <div className="absolute top-0 left-0 w-0 h-1 bg-accent group-hover:w-full transition-all duration-700" />
 
-                      {/* Content Container */}
-                      <div className="p-8 flex-grow flex flex-col">
-                        <div className="flex flex-wrap items-center gap-4 text-[10px] text-primary/40 font-black uppercase tracking-widest mb-6">
-                          <div className="flex items-center gap-2">
-                            <User size={12} className="text-accent" />
-                            {post.author}
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Calendar size={12} className="text-accent" />
-                            {post.date}
+                        {/* Image Container */}
+                        <div
+                          onClick={() => navigate(`/blog/${post.id}`)}
+                          className="relative h-60 overflow-hidden cursor-pointer"
+                        >
+                          <img
+                            src={post.image}
+                            alt={post.title}
+                            className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-40 transition-opacity" />
+
+                          <div className="absolute bottom-4 left-4">
+                            <span className="bg-accent text-primary text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1 shadow-2xl">
+                              {post.category}
+                            </span>
                           </div>
                         </div>
 
-                        <h3 className="text-xl font-black leading-tight mb-4 group-hover:text-accent transition-colors uppercase tracking-tight">
-                          {post.title}
-                        </h3>
-                        <p className="text-primary/60 text-sm leading-relaxed mb-8 font-dm-sans line-clamp-3">
-                          {post.excerpt}
-                        </p>
+                        {/* Content Container */}
+                        <div className="p-8 flex-grow flex flex-col">
+                          <div className="flex flex-wrap items-center gap-4 text-[10px] text-primary/40 font-black uppercase tracking-widest mb-6">
+                            <div className="flex items-center gap-2">
+                              <User size={12} className="text-accent" />
+                              {post.author}
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Calendar size={12} className="text-accent" />
+                              {post.date}
+                            </div>
+                          </div>
 
-                        <div className="mt-auto pt-6 border-t border-primary/5 flex items-center justify-between">
-                          <button className="flex items-center gap-3 text-primary text-[10px] font-black uppercase tracking-[0.3em] group/btn transition-colors hover:text-accent">
-                            Access Intel
-                            <ArrowRight size={14} className="group-hover/btn:translate-x-2 transition-transform" />
-                          </button>
+                          <h3
+                            onClick={() => navigate(`/blog/${post.id}`)}
+                            className="text-xl font-black leading-tight mb-4 group-hover:text-accent transition-colors uppercase tracking-tight cursor-pointer"
+                          >
+                            {post.title}
+                          </h3>
+                          <p className="text-primary/60 text-sm leading-relaxed mb-8 font-dm-sans line-clamp-3">
+                            {post.excerpt}
+                          </p>
+
+                          <div className="mt-auto pt-6 border-t border-primary/5 flex items-center justify-between">
+                            <button
+                              onClick={() => navigate(`/blog/${post.id}`)}
+                              className="flex items-center gap-3 text-primary text-[10px] font-black uppercase tracking-[0.3em] group/btn transition-colors hover:text-accent"
+                            >
+                              Access Intel
+                              <ArrowRight size={14} className="group-hover/btn:translate-x-2 transition-transform" />
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    </motion.article>
-                  ))}
-                </AnimatePresence>
+                      </motion.article>
+                    ))}
+                  </AnimatePresence>
+                )}
               </div>
 
               {/* 🔷 PAGINATION */}
@@ -276,7 +357,11 @@ const Blog = () => {
                 </h4>
                 <div className="space-y-8">
                   {recentPosts.map(post => (
-                    <div key={post.id} className="flex gap-5 group cursor-pointer">
+                    <div
+                      key={post.id}
+                      onClick={() => navigate(`/blog/${post.id}`)}
+                      className="flex gap-5 group cursor-pointer"
+                    >
                       <div className="w-16 h-16 flex-shrink-0 bg-white/5 border border-white/10 overflow-hidden">
                         <img src={post.image} alt={post.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110" />
                       </div>

@@ -362,16 +362,7 @@ const Contact = () => {
                         </div>
                       </div>
 
-                      <div className="group space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-[0.3em] text-primary/40 group-focus-within:text-accent transition-colors">Mission Subject</label>
-                        <input
-                          type="text"
-                          value={subject}
-                          onChange={(e) => setSubject(e.target.value)}
-                          placeholder="NATURE OF INQUIRY"
-                          className="w-full bg-transparent border-b-2 border-primary/10 px-0 py-4 text-primary font-black uppercase tracking-wider focus:outline-none focus:border-accent transition-all placeholder:text-primary/10 text-sm"
-                        />
-                      </div>
+
 
                       <div className="group space-y-2">
                         <label className="text-[10px] font-black uppercase tracking-[0.3em] text-primary/40 group-focus-within:text-accent transition-colors">Detailed Intel</label>
